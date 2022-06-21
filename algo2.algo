@@ -1,0 +1,148 @@
+ALGORITHM problem_1_1 //array
+VAR
+    var sum:INTEGER;
+    var i1,j1,i,j,k:INTEGER;
+    set1:ARRAY_OF INTEGER[n1];
+    set2:ARRAY_OF INTEGER[n2];
+BEGIN
+    WRITE ("taper longueur tableau 1");
+    Read(n1);
+    WRITE ("taper longueur tableau 2");
+    Read(n2);
+    WRITE ("entrer le tableau 1")
+    FOR i FROM 0 TO n1-1 STEP 1  DO
+        Read(set1[i]);
+    END_FOR
+    WRITE ("entrer le tableau 2")
+    FOR j FROM 0 TO n2-1 STEP 1  DO
+        Read(set2[j]);
+    END_FOR
+    sum:=0;
+    k:=0;
+    FOR i1 FROM 0 TO set2.length-1 STEP 1  DO
+        FOR j1 FROM 0 TO set1.length-1 STEP 1  DO
+            IF (set1[j1]==set2[i1]) THEN
+                k:=1;
+            END_IF
+        END_FOR
+        IF (k==0) THEN
+            sum := sum+set2[i1];
+        END_IF
+        k:=0;
+    END_FOR
+    FOR i1 FROM 0 TO set1.length-1 STEP 1  DO
+        FOR j1 FROM 0 TO set2.length-1 STEP 1  DO
+            IF (set1[i1]==set2[j1]) THEN
+                k:=1;
+            END_IF
+        END_FOR
+        IF (k==0) THEN
+            sum := sum+set1[i1];
+        END_IF
+        k:=0;
+    END_FOR
+    WRITE("la somme des nombres distincts sont : ");
+    WRITE(sum);
+END
+
+
+ALGORITHM problem_1_2 //hash table
+VAR
+    htab: HASH_TABLE<INTEGER,INTEGER>;
+    var sum:INTEGER;
+    var i,j,i1,j1:INTEGER;
+    set1:ARRAY_OF INTEGER[n1];
+    set2:ARRAY_OF INTEGER[n2];
+    set:ARRAY_OF INTEGER [n1+n2]
+BEGIN
+    WRITE ("taper longueur tableau 1");
+    Read(n1);
+    WRITE ("taper longueur tableau 2");
+    Read(n2);
+
+    WRITE ("entrer le tableau 1")
+    FOR i1 FROM 0 TO n1-1 STEP 1  DO
+        Read(set1[i1]);
+    END_FOR
+    WRITE ("entrer le tableau 1")
+    FOR j1 FROM 0 TO n2-1 STEP 1  DO
+        Read(set2[j1]);
+    END_FOR
+    set:=concat(set1,set2);
+    FOR i FROM 0 TO set.length-1 STEP 1 DO
+        IF (htab.lookup(set[i])== TRUE) THEN
+            count:= htab.get(set[i]);
+            htab.insert(set[i],count+1);
+        ELSE
+            htab.insert(set[i],1);
+        END_IF
+    END_FOR
+    FOR j FROM 0 TO set.length-1 STEP 1 DO
+        IF ( htab.get(set[j]) == 1) THEN
+            sum := sum +set[j];
+        END_IF 
+    END_FOR
+    
+    Write(sum);
+END
+
+
+ALGORITHM problem_2_1 //array
+VAR
+    var sum:INTEGER;
+    var i,j,k:INTEGER;
+    set1:ARRAY_OF INTEGER[4];
+    set2:ARRAY_OF INTEGER[4];
+BEGIN
+    set1:= [12, 13, 6, 10];
+    set2:= [13, 10, 16, 15];
+    sum:=0;
+    FOR i FROM 0 TO set2.length-1 STEP 1  DO
+        FOR j FROM 0 TO set1.length-1 STEP 1  DO
+            IF (set1[j]==set2[i]) THEN
+                sum:=sum+set1[j]+set2[i];
+            END_IF
+        END_FOR
+    END_FOR
+    WRITE("la somme des nombres égaux sont :");
+    WRITE(sum);
+END
+
+
+ALGORITHM problem_2_2 //hash table
+VAR
+    htab: HASH_TABLE<INTEGER,INTEGER>;
+    var sum:INTEGER;
+    var i1,i2,i,j,k,item:INTEGER;
+    set1:ARRAY_OF INTEGER[n1];
+    set2:ARRAY_OF INTEGER[n2];
+    set:ARRAY_OF INTEGER[n1+n2];
+BEGIN
+    WRITE ("taper longueur tableau 1");
+    Read(n1);
+    WRITE ("taper longueur tableau 2");
+    Read(n2);
+    WRITE ("entrer le tableau 1")
+    FOR i1 FROM 0 TO 3 STEP 1  DO
+        Read(set1[i1]);
+    END_FOR
+    WRITE ("entrer le tableau 1")
+    FOR i2 FROM 0 TO 4 STEP 1  DO
+        Read(set2[i2]);
+    END_FOR
+    set:=concat(set1,set2);
+    FOR i FROM 0 TO set.length-1 STEP 1 DO
+        IF (htab.lookup(set[i])== TRUE) THEN
+            count:= htab.get(set[i]);
+            htab.insert(set[i],count+1);
+        ELSE
+            htab.insert(set[i],1);
+        END_IF
+    END_FOR
+FOR (k in htab)  DO 
+    IF (k[1]>1) THEN
+        sum:= sum + k[0]*k[1];
+    END_IF
+END_FOR
+write(sum);
+END
